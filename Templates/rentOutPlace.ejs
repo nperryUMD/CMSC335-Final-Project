@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Not AirBnB</title>
+    <style>
+        .rightSideNav{
+            right: 0px;
+            padding: 15px;
+            font-size: 1em;
+            position: absolute;
+            top: 0px;
+        }
+
+        .leftSideNav{
+            left: 0px;
+            font-size: 1.5em;
+            position: absolute;
+            top: 0px;
+            margin: 15px;
+        }
+
+        .topButtons{
+            border: none; 
+            background-color: white;
+            font-size: 1.5em;
+        }
+
+        .topButtons:hover{
+            background-color: lightgray;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <div>
+        <p class="topButtons leftSideNav" onclick="get('/')">
+            Not AirBnB
+        </p>
+        <div class="rightSideNav">
+            <button class="topButtons" onclick="get('/search')">Browse All</button> |
+            <button class="topButtons" onclick="get('/rentOutPlace')">Rent out a Space</button>
+        </div>
+    </div>
+
+    <div>
+        <div style="margin: 100px auto auto auto; text-align: center; ">
+            <button onclick="loadFakeData()">Press to auto load fake data</button>
+            <p id="loadedSuccess" style="display: none;">Data Loaded Successfully</p>
+        </div>
+        
+	</div>
+
+    <script>
+
+            function get(path, method='get') {
+                const form = document.createElement('form');
+                form.method = method;
+                form.action = path;
+
+                document.body.appendChild(form);
+                form.submit();
+            }
+            
+            function loadFakeData() {
+                const form = document.createElement('form');
+                form.method = 'post';
+                form.action = 'loadFakeData';
+                document.body.appendChild(form);
+                
+                form.submit();
+                document.getElementById('loadedSuccess').style.display = 'block';
+            }
+
+</script>
+	
+</body>
