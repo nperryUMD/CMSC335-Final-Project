@@ -10,7 +10,7 @@
             width: 350px;
             padding: 5px;
             border-style: solid;
-            float: left;
+            display: inline-block;
             height: 150px;
             margin: 10px; 
         }
@@ -98,7 +98,9 @@
                 <input type="submit" onclick="sendSearch()" value="Filter"/>
             </form>
         </div>
-        <%- searchResults %>
+        <div>
+            <%- searchResults %>
+        </div>
         
 	</div>
 
