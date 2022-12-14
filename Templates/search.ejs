@@ -121,6 +121,22 @@
                 form.submit();
             }
 
+            function rent(id) {
+                const form = document.createElement('form');
+                form.method = 'get';
+                form.action = '/rentPlace';
+
+                const hiddenField = document.createElement('input');
+                hiddenField.type = 'hidden';
+                hiddenField.name = 'id';
+                hiddenField.value = id;
+
+                form.appendChild(hiddenField);
+
+                document.body.appendChild(form);
+                form.submit();
+            }
+
 </script>
 	
 </body>
