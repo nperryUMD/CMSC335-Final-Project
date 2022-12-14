@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Not AirBnB</title>
+    <style>
+        .results{
+            border-color: black;
+            border-radius: .5em;
+            width: 350px;
+            padding: 5px;
+            border-style: solid;
+            float: left;
+            height: 140px;
+            margin: 10px; 
+        }
+
+        .rightSideNav{
+            right: 0px;
+            padding: 15px;
+            font-size: 1em;
+            position: absolute;
+            top: 0px;
+        }
+
+        .leftSideNav{
+            left: 0px;
+            font-size: 1.5em;
+            position: absolute;
+            top: 0px;
+            margin: 15px;
+        }
+
+        .topButtons{
+            border: none; 
+            background-color: white;
+            font-size: 1.5em;
+        }
+
+        .topButtons:hover{
+            background-color: lightgray;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <p class="topButtons leftSideNav" onclick="get('/')">
+            Not AirBnB
+        </p>
+        <div class="rightSideNav">
+            <button class="topButtons" onclick="get('/search')">Browse All</button> |
+            <button class="topButtons" onclick="get('/rentOutPlace')">Rent out a Space</button>
+        </div>
+    </div>
+
+    <div>
+        <div style="margin: 100px auto auto auto; text-align: center; ">
+            <form action="/search" method="get">
+                <input size='60' placeholder="Enter a location" value="<%- searchBar %>" name='location' id='searchBar'></input>
+                <input type="submit" onclick="sendSearch()" value="Filter"/>
+            </form>
+        </div>
+        <%- searchResults %>
+        
+	</div>
+
+    <script>
+            function sendSearch() {
+                var options = document.getElementById('searchBar');
+                var url = new URL(window.location.href);
+                var params = new URLSearchParams(url.search);
+
+                params.set('location', 'options');
+                window.location.href = url.toString;
+            }
+
+            function get(path, method='get') {
+                const form = document.createElement('form');
+                form.method = method;
+                form.action = path;
+
+                document.body.appendChild(form);
+                form.submit();
+            }
+
+</script>
+	
+</body>
