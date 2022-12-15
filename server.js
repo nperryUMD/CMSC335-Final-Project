@@ -69,9 +69,9 @@ app.get("/search", async (request, response) => {
     }
     
     for(var i = 0; i < places.length; i++){
-        results += "<div class='results'><image class='resultImages' src=" + places[i].image + "></image><button class='rentButton' onclick=\"rent('" + places[i]._id.toString() + "')\">Rent Me!</button><p>Address: " 
-                    + places[i].street + ", " + places[i].city + " " + places[i].state + " " 
-                    + places[i].zip + "</p><p>Price: $" + places[i].cost + "/night</p><p>Owner: " + places[i].owner + "</p></div>";
+        results += "<div class='results'><image class='resultImages' src=" + places[i].image + "></image><button class='rentButton' onclick=\"rent('" + places[i]._id.toString() 
+                    + "')\">Rent Me!</button><p class='topText'>Address: " + places[i].street + ", " + places[i].city + " " + places[i].state + " " + places[i].zip + "</p><p>" 
+                    + places[i].bed + " beds, " + places[i].bath + " baths" + "</p><p>Price: $" + places[i].cost + "/night</p><p>Owner: " + places[i].owner + "</p></div>";
     }
     
     response.render("search.ejs", {searchBar: location, searchResults: results});
@@ -103,7 +103,8 @@ app.get("/rentPlace", async (request, response) =>{
     }
 
     var addy = place.street + ", " + place.city + " " + place.state + " " + place.zip;
-    response.render("rentPlace.ejs", {address: addy, cost: place.cost, owner: place.owner, image: place.image});
+    var bedBathText = bed + " beds, " + bath + " baths";
+    response.render("rentPlace.ejs", {address: addy, bedBath: bedBathText, cost: place.cost, owner: place.owner, image: place.image});
 });
 
 app.post("/rentOutPlace", async (request, response) =>{
@@ -113,8 +114,10 @@ app.post("/rentOutPlace", async (request, response) =>{
     var state = request.body.state;
     var zip = request.body.zip;
     var cost = request.body.cost;
+    var bed = request.body.bed;
+    var bath = request.body.bath;
     var image = request.body.image;
-    var place = {owner: name, street: street, city: city, state: state, zip: zip, cost: cost, image: image};
+    var place = {owner: name, street: street, city: city, state: state, zip: zip, cost: cost, bed, bath, image: image};
 
     try {
         await client.connect();
@@ -128,12 +131,12 @@ app.post("/rentOutPlace", async (request, response) =>{
 
 
 app.post("/loadFakeData", async (request, response) =>{
-    var places = [{owner: "Nicholas Perry", street: "8204 Baltimore ave", city: "College Park", state: "Maryland", zip: "20740", cost: "50", image: "https://odis.homeaway.com/odis/destination/5941b1e0-2600-4b2a-b27e-c667abf7e510.carousel-m.jpg"}, 
-                    {owner: "asdf asdfadsf", street: "232 vasedfd ave", city: "College Park", state: "Maryland", zip: "20740", cost: "80", image: "https://i0.wp.com/files.tripstodiscover.com/files/2021/07/Bamboo-House-Netflix.jpg?resize=784%2C521"},
-                    {owner: "scooby do", street: "705 church st", city: "sipper bark", state: "Virginia", zip: "20368", cost: "100" ,image: "https://www.southernliving.com/thmb/eOuNUEM15ZXO2hDAK7oXVVR17Fc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/gettyimages-525981286-2000-dac41913bef747e78a797b341dc3708d.jpg"},
-                    {owner: "scooby do", street: "705 church st", city: "sipper bark", state: "Virginia", zip: "20368", cost: "100", image: "https://images.ctfassets.net/gxwgulxyxxy1/7Dhves120IEQzq3Zz7yOo6/64f12e4d88f4ac268f6d842dcf807aa9/lake-1453079_1280.jpg"},
-                    {owner: "scooby do", street: "705 church st", city: "sipper bark", state: "Virginia", zip: "20368", cost: "100", image: "https://www.fortunebuilders.com/wp-content/uploads/2021/04/best-places-to-buy-vacation-rental-property.jpg"},
-                    {owner: "scooby do", street: "705 church st", city: "sipper bark", state: "Virginia", zip: "20368", cost: "100", image: "https://wp-tid.zillowstatic.com/18/FL_TPA_HISTORIC_KENWOOD_82561_239_qrt-d7969b.jpg"}];
+    var places = [{owner: "Nicholas Perry", street: "8204 Baltimore ave", city: "College Park", state: "Maryland", zip: "20740", cost: "50", bed: "3", bath: "2", image: "https://odis.homeaway.com/odis/destination/5941b1e0-2600-4b2a-b27e-c667abf7e510.carousel-m.jpg"}, 
+                    {owner: "asdf asdfadsf", street: "232 vasedfd ave", city: "College Park", state: "Maryland", zip: "20740", cost: "80", bed: "3", bath: "2", image: "https://i0.wp.com/files.tripstodiscover.com/files/2021/07/Bamboo-House-Netflix.jpg?resize=784%2C521"},
+                    {owner: "scooby do", street: "705 church st", city: "sipper bark", state: "Virginia", zip: "20368", cost: "100", bed: "3", bath: "2", image: "https://www.southernliving.com/thmb/eOuNUEM15ZXO2hDAK7oXVVR17Fc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/gettyimages-525981286-2000-dac41913bef747e78a797b341dc3708d.jpg"},
+                    {owner: "scooby do", street: "705 church st", city: "sipper bark", state: "Virginia", zip: "20368", cost: "100", bed: "3", bath: "2", image: "https://images.ctfassets.net/gxwgulxyxxy1/7Dhves120IEQzq3Zz7yOo6/64f12e4d88f4ac268f6d842dcf807aa9/lake-1453079_1280.jpg"},
+                    {owner: "scooby do", street: "705 church st", city: "sipper bark", state: "Virginia", zip: "20368", cost: "100", bed: "3", bath: "2", image: "https://www.fortunebuilders.com/wp-content/uploads/2021/04/best-places-to-buy-vacation-rental-property.jpg"},
+                    {owner: "scooby do", street: "705 church st", city: "sipper bark", state: "Virginia", zip: "20368", cost: "100", bed: "3", bath: "2", image: "https://wp-tid.zillowstatic.com/18/FL_TPA_HISTORIC_KENWOOD_82561_239_qrt-d7969b.jpg"}];
     
     try {
         await client.connect();
