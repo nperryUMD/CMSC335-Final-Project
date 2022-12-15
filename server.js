@@ -77,8 +77,8 @@ app.get("/search", async (request, response) => {
     response.render("search.ejs", {searchBar: location, searchResults: results});
 });
 
-app.get("/rentOutPlace", (request, response) =>{
-    response.render("rentOutPlace.ejs");
+app.get("/manageProperty", (request, response) =>{
+    response.render("manageProperty.ejs");
 });
 
 app.get("/rentPlace", async (request, response) =>{
@@ -107,7 +107,7 @@ app.get("/rentPlace", async (request, response) =>{
     response.render("rentPlace.ejs", {address: addy, bedBath: bedBathText, cost: place.cost, owner: place.owner, image: place.image});
 });
 
-app.post("/rentOutPlace", async (request, response) =>{
+app.post("/manageProperty", async (request, response) =>{
     var name = request.body.name;
     var street = request.body.street;
     var city = request.body.city;
