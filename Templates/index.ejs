@@ -4,6 +4,12 @@
 	<meta charset="utf-8">
 	<title>Not AirBnB</title>
     <style>
+        .frontPageTitle{
+            font-size: 8em;
+        }
+        .frontPageTitle:hover{
+            cursor: default;
+        }
         .topButtons{
             border: none; 
             background-color: white;
@@ -28,7 +34,7 @@
         <button class="topButtons" onclick="get('/rentOutPlace')">Rent out a Space</button>
     </div>
 	<div style="margin: auto; text-align: center;">
-		<p style="font-size: 8em;">Not AirBnB</p>
+		<p class="frontPageTitle">Not AirBnB</p>
 		<div>
             <form action="/search" method="get">
                 <input size="100" placeholder ="Search for a location!" name="location" id="searchBar"></input>

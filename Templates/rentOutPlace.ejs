@@ -44,6 +44,22 @@
         </div>
     </div>
 
+    <div style="margin: 100px auto auto auto;">
+        <p id="addedSuccess" style="display: none;">Property Successfully Added!</p>
+        <form action="/rentOutPlace" method="post">
+            <label>Full Name: <input type="text" name="name"/></label><br/>
+            <label>Street: <input type="text" name="street"/></label><br/>
+            <label>City: <input type="text" name="city"/></label><br/>
+            <label>State: <input type="text" name="state"/></label><br/>
+            <label>Zip: <input type="text" name="zip"/></label><br/>
+            <label>Cost per night: <input type="text" name="cost"></label><br/>
+            <label>Image url: <input type="text" name="image"></label><br/>
+    
+            <br>
+            <input type="reset" />
+            <input type="submit" onclick="AddedSuccess()" value="Submit Application"/>
+        </form>
+    </div>
     <div>
         <div style="margin: 100px auto auto auto; text-align: center; ">
             <button onclick="loadFakeData()">Press to auto load fake data</button>
@@ -62,7 +78,7 @@
                 document.body.appendChild(form);
                 form.submit();
             }
-            
+
             function loadFakeData() {
                 const form = document.createElement('form');
                 form.method = 'post';
@@ -71,6 +87,10 @@
                 
                 form.submit();
                 document.getElementById('loadedSuccess').style.display = 'block';
+            }
+
+            function AddedSuccess() {
+                document.getElementById('addedSuccess').style.display = 'block';
             }
 
 </script>
