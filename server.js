@@ -21,10 +21,6 @@ app.set("views", path.resolve(__dirname, "Templates"));
 app.set("view engine", "ejs");
 app.use(bodyparser.urlencoded({extended:false}));
 
-/* function displayWeather(data) {
-    const currentWeather = data
-} */
-
 async function insertPlace(client, databaseAndCollection, place) {
     const result = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).insertOne(place);
 }
@@ -154,20 +150,6 @@ app.get("/rentPlace", async (request, response) =>{
     if(!place){
         response.redirect("/search");
     }
-
-    // // using Realtime weather API
-    // let breakSpace = place.city.split(" ");
-    // console.log(breakSpace);
-    // let cityString = "";
-    // if (breakSpace.length > 1) {
-    //     breakSpace.array.forEach(element => {
-    //         cityString += element + "%20";
-    //     });
-    //     url += cityString;
-    // } else {
-    //     url += breakSpace;
-    // }
-
     url += place.city
     
     const options = {
@@ -182,7 +164,6 @@ app.get("/rentPlace", async (request, response) =>{
 	    .then(response => response.json())
 	    .then(data => {
             console.log(data);
-            //displayWeather(data);
         })
 	    .catch(err => console.error('error:' + err));
 
