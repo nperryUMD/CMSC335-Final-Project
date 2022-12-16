@@ -162,13 +162,13 @@ app.get("/rentPlace", async (request, response) =>{
         }
     };
 
-    let currWeather;
+    let currWeather, currConditon;
     try {
-        fetch(url, options)
+        await fetch(url, options)
 	    .then(response => response.json())
 	    .then(data => {
-            console.log(data);
-            currWeather = data["current"]["temp_f"];
+            currWeather = String(data["current"]["temp_f"]);
+            currCondition = data["current"]["condition"]["text"];
         });
     } catch (e) {
         console.error(e);
@@ -189,7 +189,8 @@ app.get("/rentPlace", async (request, response) =>{
         button = "<form action='/rentPlace' method='post'><input readonly disabled='disabled' class='rentedButton'  type='submit' value='Rented out!'/></form>";
     }
 
-    response.render("rentPlace.ejs", {address: addy, bedBath: bedBathText, cost: place.cost, weather: currWeather, owner: place.owner, image: place.image, availablility: available, button: button});
+    response.render("rentPlace.ejs", {address: addy, bedBath: bedBathText, cost: place.cost, weather: currWeather, condition: currCondition,
+            owner: place.owner, image: place.image, availablility: available, button: button});
 });
 
 app.post("/rentPlace", async (request, response) =>{
@@ -225,13 +226,13 @@ app.post("/rentPlace", async (request, response) =>{
         }
     };
 
-    let currWeather;
+    let currWeather, currConditon;
     try {
         fetch(url, options)
 	    .then(response => response.json())
 	    .then(data => {
-            console.log(data);
             currWeather = data["current"]["temp_f"];
+            currConditon = data["current"]["condition"]["text"];
         });
     } catch (e) {
         console.error(e);
@@ -254,7 +255,8 @@ app.post("/rentPlace", async (request, response) =>{
 
     var button = "<form action='/rentPlace' method='post'><input readonly disabled='disabled' class='rentedButton'  type='submit' value='Rented out!'/></form>";
 
-    response.render("rentPlace.ejs", {address: addy, bedBath: bedBathText, cost: place.cost, weather: currWeather, owner: place.owner, image: place.image, availablility: available, button: button});
+    response.render("rentPlace.ejs", {address: addy, bedBath: bedBathText, cost: place.cost, weather: currWeather, condition: currCondition,
+            owner: place.owner, image: place.image, availablility: available, button: button});
 });
 
 app.post("/managePropertyAdded", async (request, response) =>{
