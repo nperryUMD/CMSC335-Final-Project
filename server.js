@@ -143,7 +143,6 @@ app.post("/managePropertyAdded", async (request, response) =>{
 });
 
 app.post("/managePropertyRemoved", async (request, response) =>{
-    var name = request.body.name;
     var street = request.body.street;
     var city = request.body.city;
     var state = request.body.state;
