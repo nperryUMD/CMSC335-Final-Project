@@ -10,7 +10,7 @@
             border-width: 1px;
             height: 60px;
         }
-        
+
         .results{
             border-color: black;
             border-radius: .5em;
@@ -89,6 +89,21 @@
             cursor: pointer;
         }
 
+        .margin-bottom{
+            margin-bottom: 20px;
+        }
+
+        .searchBar{
+            margin: 50px auto auto auto; 
+            text-align: center;
+        }
+
+        .spaceDivs{
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 400px);
+            justify-content: center;
+        }
+
     </style>
 </head>
 <body>
@@ -103,13 +118,13 @@
     </div>
 
     <div>
-        <div style="margin: 100px auto auto auto; text-align: center; ">
+        <div class="searchBar">
             <form action="/search" method="get">
-                <input size='60' placeholder="Enter a city" value="<%- searchBar %>" name='location' id='searchBar'></input>
+                <input class="margin-bottom"size='60' placeholder="Enter a city" value="<%- searchBar %>" name='location' id='searchBar'></input>
                 <input type="submit" onclick="sendSearch()" value="Filter"/>
             </form>
         </div>
-        <div>
+        <div class="spaceDivs">
             <%- searchResults %>
         </div>
         
