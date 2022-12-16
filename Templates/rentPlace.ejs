@@ -87,6 +87,43 @@
             top: 1px;
         }
 
+        .rentButton {
+            background-color: #4CAF50;
+            border-radius: 8px;
+            margin-top: 8px;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+            background-color: white; 
+            color: black; 
+            border: 2px solid #4CAF50;
+        }
+
+        .rentedButton {
+            border-radius: 8px;
+            margin-top: 8px;
+            border: none;
+            color: black;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: lightgreen; 
+            color: black; 
+            border: 2px solid #4CAF50;
+        }
+
+        .rentButton:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+
     </style>
 </head>
 <body>
@@ -109,25 +146,8 @@
             <p>Owner: <%- owner %></p>
             <p>This property is <%- availablility %></p>
 
+            <%- button %>
             
-                
-            <div class="spaceDivs fixedWidth">
-                <form>
-                    <fieldset>
-                        <legend>Rent it!</legend>
-                        <div class="bottomMargin"><label class="floatLeft">Full Name: </label><input type="text" class="floatRight" name="name"/></div>
-                        <div class="bottomMargin"><label class="floatLeft">Phone: </label><input type="phone" class="floatRight" name="phone"/></div>
-                        <div class="bottomMargin"><label class="floatLeft">Email: </label><input type="email" class="floatRight" name="email"/></div>
-                
-                        <br/>
-                        <br/>
-                        <input class="floatLeft" onclick="" type="reset" />
-                        <input class="floatRight"  type="submit" onclick="" value="Rent Property"/>
-                    </fieldset>
-                </form>
-            </div>
-            
-
         </div>
         
 	</div>
@@ -141,16 +161,6 @@
 
                 document.body.appendChild(form);
                 form.submit();
-            }
-            
-            function loadFakeData() {
-                const form = document.createElement('form');
-                form.method = 'post';
-                form.action = 'loadFakeData';
-                document.body.appendChild(form);
-                
-                form.submit();
-                document.getElementById('loadedSuccess').style.display = 'block';
             }
 
 </script>

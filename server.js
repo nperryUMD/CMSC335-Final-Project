@@ -34,6 +34,17 @@ async function removeById(client, databaseAndCollection, id) {
                    .deleteOne(filter);
 }
 
+async function setAvailabilityById(client, databaseAndCollection, id, available) {
+    let filter = {_id : ObjectId(id)};
+    let update = { $set: {availablility: available} };
+
+    const result = await client.db(databaseAndCollection.db)
+    .collection(databaseAndCollection.collection)
+    .updateOne(filter, update);
+
+    return result;
+}
+
 async function getById(client, databaseAndCollection, id) {
     let filter = {_id : ObjectId(id)};
     const result = client.db(databaseAndCollection.db)
@@ -62,6 +73,16 @@ async function getAll(client, databaseAndCollection) {
     return result;
 }
 
+async function getAllByCity(client, databaseAndCollection, city) {
+    let filter = {city: city};
+    const cursor = client.db(databaseAndCollection.db)
+    .collection(databaseAndCollection.collection)
+    .find(filter).collation({ locale: 'en', strength: 2 });
+
+    const result = await cursor.toArray();
+    return result;
+}
+
 app.get("/", (request, response) => {
     response.render("index.ejs");
 });
@@ -75,13 +96,24 @@ app.get("/search", async (request, response) => {
 
     let places;
 
-    try {
-        await client.connect();
-        places = await getAll(client, databaseAndCollection);
-    } catch (e) {
-        console.error(e);
-    } finally {
-        await client.close();
+    if(location.length == 0){
+        try {
+            await client.connect();
+            places = await getAll(client, databaseAndCollection);
+        } catch (e) {
+            console.error(e);
+        } finally {
+            await client.close();
+        }
+    }else{
+        try {
+            await client.connect();
+            places = await getAllByCity(client, databaseAndCollection, location);
+        } catch (e) {
+            console.error(e);
+        } finally {
+            await client.close();
+        }
     }
     
     for(var i = 0; i < places.length; i++){
@@ -102,7 +134,7 @@ app.get("/rentPlace", async (request, response) =>{
     var id = request.query.id;
     if(id == undefined || id == null || id.length == 0){
         location = "";
-        response.redirect("/search");
+        return response.redirect("/search");
     }
     var place;
 
@@ -122,13 +154,57 @@ app.get("/rentPlace", async (request, response) =>{
     var addy = place.street + ", " + place.city + " " + place.state + " " + place.zip;
     var bedBathText = place.bed + " beds, " + place.bath + " baths";
     var available = "";
+    var button;
     if(place.availablility){
         available = "<strong>available</strong>";
+        button = "<form action='/rentPlace' method='post'><input style='display:none' type='text' name='id' value='" + place._id 
+                    + "'/><input class='rentButton' type='submit' value='Rent Place!'/></form>";
     }else{
         available = "<strong>not available</strong>";
+        button = "<form action='/rentPlace' method='post'><input readonly disabled='disabled' class='rentedButton'  type='submit' value='Rented out!'/></form>";
     }
 
-    response.render("rentPlace.ejs", {address: addy, bedBath: bedBathText, cost: place.cost, owner: place.owner, image: place.image, availablility: available});
+    response.render("rentPlace.ejs", {address: addy, bedBath: bedBathText, cost: place.cost, owner: place.owner, image: place.image, availablility: available, button: button});
+});
+
+app.post("/rentPlace", async (request, response) =>{
+    var id = request.body.id;
+    if(id == undefined || id == null || id.length == 0){
+        location = "";
+        return response.redirect("/search");
+    }
+
+    var place;
+
+    try {
+        await client.connect();
+        place = await getById(client, databaseAndCollection, id);
+    } catch (e) {
+        console.error(e);
+    } finally {
+        await client.close();
+    }
+
+    if(!place){
+        response.redirect("/search");
+    }
+
+    try {
+        await client.connect();
+        await setAvailabilityById(client, databaseAndCollection, id, false);
+    } catch (e) {
+        console.error(e);
+    } finally {
+        await client.close();
+    }
+    
+    var addy = place.street + ", " + place.city + " " + place.state + " " + place.zip;
+    var bedBathText = place.bed + " beds, " + place.bath + " baths";
+    var available = available = "<strong>not available</strong>";
+
+    var button = "<form action='/rentPlace' method='post'><input readonly disabled='disabled' class='rentedButton'  type='submit' value='Rented out!'/></form>";
+
+    response.render("rentPlace.ejs", {address: addy, bedBath: bedBathText, cost: place.cost, owner: place.owner, image: place.image, availablility: available, button: button});
 });
 
 app.post("/managePropertyAdded", async (request, response) =>{

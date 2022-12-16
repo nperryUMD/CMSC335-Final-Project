@@ -93,6 +93,10 @@
             margin-bottom: 20px;
         }
 
+        .margin-right{
+            margin-right: 20px;
+        }
+
         .searchBar{
             margin: 50px auto auto auto; 
             text-align: center;
@@ -120,7 +124,8 @@
     <div>
         <div class="searchBar">
             <form action="/search" method="get">
-                <input class="margin-bottom"size='60' placeholder="Enter a city" value="<%- searchBar %>" name='location' id='searchBar'></input>
+                <!-- <input type="checkbox" id="showAvailable" name="showAvailable" checked><label for="showAvailable" class="margin-right"> Only show available?</label> -->
+                <input class="margin-bottom" size='60' placeholder="Enter a city" value="<%- searchBar %>" name='location' id='searchBar'/>
                 <input type="submit" onclick="sendSearch()" value="Filter"/>
             </form>
         </div>
