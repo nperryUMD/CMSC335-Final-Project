@@ -5,6 +5,7 @@
 	<title>Not AirBnB</title>
     <style>
         .frontPageTitle{
+            color: coral;
             font-size: 8em;
         }
         .frontPageTitle:hover{
@@ -12,24 +13,44 @@
         }
         .topButtons{
             border: none; 
-            background-color: white;
+            background-color: none;
             font-size: 1em;
+            color: white;
+            border-radius: 4px;
+            border: none;
+            text-decoration: none;
+            transition-duration: 0.3s;
+            cursor: pointer;
+            background-color: transparent;
+
         }
 
         .topButtons:hover{
-            background-color: lightgray;
+            color: coral;
+            background-color: white;
             cursor: pointer;
+        }
+
+        .backgroundImage{
+            background-image: url("https://dm0qx8t0i9gc9.cloudfront.net/thumbnails/video/4Xw4byPvl/videoblocks-4k-footage-of-a-yellow-american-suburban-house-rising-to-show-the-rooftops-of-other-houses-in-the-neighborhood_hfuo7ob_u_thumbnail-1080_01.png");
+            width: 99vw;
+            height: 80vh;
+            margin: 0px;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
         }
 
     </style>
 </head>
-<body>
+<body class="backgroundImage">
     <div style="
         position: absolute;
         right: 0px;
         top: 0px;
         padding: 15px;
-        font-size: 1.5em;">
+        font-size: 1.5em;
+        color: white;">
         <button class="topButtons" onclick="get('/search')">Browse All</button> |
         <button class="topButtons" onclick="get('/manageProperty')">Manage Property</button>
     </div>

@@ -115,7 +115,7 @@ app.get("/rentPlace", async (request, response) =>{
     // form to rent
 
     var form = "";
-    
+
 
     response.render("rentPlace.ejs", {address: addy, bedBath: bedBathText, cost: place.cost, owner: place.owner, image: place.image, availablility: available});
 });
