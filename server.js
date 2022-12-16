@@ -1,7 +1,7 @@
-let http = require("http");
-let port_number = process.env.PORT || 5001;
-let path = require("path");
-let express = require("express");
+const http = require("http");
+const port_number = process.env.PORT || 5001;
+const path = require("path");
+const express = require("express");
 const {ObjectId} = require('mongodb');
 require("dotenv").config({ path: path.resolve(__dirname, '.env') })  
 
@@ -21,7 +21,9 @@ app.set("views", path.resolve(__dirname, "Templates"));
 app.set("view engine", "ejs");
 app.use(bodyparser.urlencoded({extended:false}));
 
-
+/* function displayWeather(data) {
+    const currentWeather = data
+} */
 
 async function insertPlace(client, databaseAndCollection, place) {
     const result = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).insertOne(place);
@@ -131,6 +133,8 @@ app.get("/manageProperty", (request, response) =>{
 });
 
 app.get("/rentPlace", async (request, response) =>{
+    const fetch = require("node-fetch");
+    let url = 'https://weatherapi-com.p.rapidapi.com/current.json?q=';
     var id = request.query.id;
     if(id == undefined || id == null || id.length == 0){
         location = "";
@@ -150,6 +154,36 @@ app.get("/rentPlace", async (request, response) =>{
     if(!place){
         response.redirect("/search");
     }
+
+    // using Realtime weather API
+    let breakSpace = place.city.split(" ");
+    console.log(breakSpace);
+    alert("hi");
+    let cityString = "";
+    if (breakSpace.length > 1) {
+        breakSpace.array.forEach(element => {
+            cityString += element + "%20";
+        });
+        url += cityString;
+    } else {
+        url += breakSpace;
+    }
+    
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': '7067c52d38msha5a660c9dbb588ap121ee0jsn8eda68d6893c',
+            'X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com'
+        }
+    };
+
+    fetch(url, options)
+	    .then(response => response.json())
+	    .then(data => {
+            console.log(data);
+            //displayWeather(data);
+        })
+	    .catch(err => console.error('error:' + err));
 
     var addy = place.street + ", " + place.city + " " + place.state + " " + place.zip;
     var bedBathText = place.bed + " beds, " + place.bath + " baths";

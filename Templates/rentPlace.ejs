@@ -156,15 +156,14 @@
 	</div>
 
     <script>
+        function get(path, method='get') {
+            const form = document.createElement('form');
+            form.method = method;
+            form.action = path;
 
-            function get(path, method='get') {
-                const form = document.createElement('form');
-                form.method = method;
-                form.action = path;
-
-                document.body.appendChild(form);
-                form.submit();
-            }
+            document.body.appendChild(form);
+            form.submit();
+        }
 
 </script>
 	
