@@ -17,7 +17,7 @@ process.stdin.setEncoding("utf8");
 let bodyparser = require("body-parser");
 let app = express();
 
-app.set("views", path.resolve(__dirname, "templates"));
+app.set("views", path.resolve(__dirname, "Templates"));
 app.set("view engine", "ejs");
 app.use(bodyparser.urlencoded({extended:false}));
 
