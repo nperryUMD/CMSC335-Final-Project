@@ -4,6 +4,42 @@
 	<meta charset="utf-8">
 	<title>Not AirBnB</title>
     <style>
+        .fixedWidth{
+            width: 25vw;
+        }
+
+        .navigationBar{
+            border-color: black;
+            border-bottom: solid;
+            border-width: 1px;
+            height: 60px;
+        }
+
+        .rightSideNav{
+            right: 0px;
+            padding: 15px;
+            font-size: 1em;
+            position: absolute;
+            top: 0px;
+        }
+
+        .bottomMargin{
+            margin-bottom: 2px;
+            height: 25px;
+        }
+
+        .floatLeft{
+            display: grid;
+            justify-content: start;
+            float: left;
+            margin-right: 10px;
+        }
+
+        .floatRight{
+            display: grid;
+            justify-content: end;
+            float: right;
+        }
         .rightSideNav{
             right: 0px;
             padding: 15px;
@@ -54,7 +90,7 @@
     </style>
 </head>
 <body>
-    <div>
+    <div class="navigationBar">
         <p class="topButtons leftSideNav" onclick="get('/')">
             Not AirBnB
         </p>
@@ -71,6 +107,27 @@
             <p>Cost: <%- cost %>/night</p>
             <p><%- bedBath %></p>
             <p>Owner: <%- owner %></p>
+            <p>This property is <%- availablility %></p>
+
+            
+                
+            <div class="spaceDivs fixedWidth">
+                <form>
+                    <fieldset>
+                        <legend>Rent it!</legend>
+                        <div class="bottomMargin"><label class="floatLeft">Full Name: </label><input type="text" class="floatRight" name="name"/></div>
+                        <div class="bottomMargin"><label class="floatLeft">Phone: </label><input type="phone" class="floatRight" name="phone"/></div>
+                        <div class="bottomMargin"><label class="floatLeft">Email: </label><input type="email" class="floatRight" name="email"/></div>
+                
+                        <br/>
+                        <br/>
+                        <input class="floatLeft" onclick="" type="reset" />
+                        <input class="floatRight"  type="submit" onclick="" value="Rent Property"/>
+                    </fieldset>
+                </form>
+            </div>
+            
+
         </div>
         
 	</div>

@@ -4,6 +4,13 @@
 	<meta charset="utf-8">
 	<title>Not AirBnB</title>
     <style>
+        .navigationBar{
+            border-color: black;
+            border-bottom: solid;
+            border-width: 1px;
+            height: 60px;
+        }
+        
         .results{
             border-color: black;
             border-radius: .5em;
@@ -85,7 +92,7 @@
     </style>
 </head>
 <body>
-    <div>
+    <div class="navigationBar">
         <p class="topButtons leftSideNav" onclick="get('/')">
             Not AirBnB
         </p>
@@ -98,7 +105,7 @@
     <div>
         <div style="margin: 100px auto auto auto; text-align: center; ">
             <form action="/search" method="get">
-                <input size='60' placeholder="Enter a location" value="<%- searchBar %>" name='location' id='searchBar'></input>
+                <input size='60' placeholder="Enter a city" value="<%- searchBar %>" name='location' id='searchBar'></input>
                 <input type="submit" onclick="sendSearch()" value="Filter"/>
             </form>
         </div>

@@ -4,12 +4,37 @@
 	<meta charset="utf-8">
 	<title>Not AirBnB</title>
     <style>
+        .navigationBar{
+            border-color: black;
+            border-bottom: solid;
+            border-width: 1px;
+            height: 60px;
+        }
+
         .rightSideNav{
             right: 0px;
             padding: 15px;
             font-size: 1em;
             position: absolute;
             top: 0px;
+        }
+
+        .bottomMargin{
+            margin-bottom: 2px;
+            height: 25px;
+        }
+
+        .floatLeft{
+            display: grid;
+            justify-content: start;
+            float: left;
+            margin-right: 10px;
+        }
+
+        .floatRight{
+            display: grid;
+            justify-content: end;
+            float: right;
         }
 
         .leftSideNav{
@@ -31,10 +56,22 @@
             cursor: pointer;
         }
 
+        .spaceDivs{
+            width: 50%;
+            display: inline-block;
+            display: flex;
+            justify-content: center;
+        }
+
+        .rightDivider{
+            border-right: solid;
+            border-color: black;
+            border-width: 1px;
+        }
     </style>
 </head>
-<body>
-    <div>
+<body style="margin: 0px">
+    <div class="navigationBar">
         <p class="topButtons leftSideNav" onclick="get('/')">
             Not AirBnB
         </p>
@@ -44,23 +81,48 @@
         </div>
     </div>
 
-    <div style="margin: 100px auto auto auto;">
-        <p id="addedSuccess" style="display: none;">Property Successfully Added!</p>
-        <form action="/rentOutPlace" method="post">
-            <label>Full Name: <input type="text" name="name"/></label><br/>
-            <label>Street: <input type="text" name="street"/></label><br/>
-            <label>City: <input type="text" name="city"/></label><br/>
-            <label>State: <input type="text" name="state"/></label><br/>
-            <label>Zip: <input type="text" name="zip"/></label><br/>
-            <label>Number of beds: <input type="text" name="bed"/></label><br/>
-            <label>Number of baths: <input type="text" name="bath"/></label><br/>
-            <label>Cost per night: <input type="text" name="cost"></label><br/>
-            <label>Image url: <input type="text" name="image"></label><br/>
-    
-            <br>
-            <input type="reset" />
-            <input type="submit" onclick="AddedSuccess()" value="Submit Property"/>
-        </form>
+    <div style="margin: 100px auto auto auto; display: flex; justify-content: center;">
+        <div class="spaceDivs rightDivider">
+            <div>
+                <h2>Rent out a space</h2>
+                <p id="addedSuccess" style="display: none; color: green;">Property Successfully Added!</p>
+                <form action="/managePropertyAdded" method="post">
+                    <div class="bottomMargin"><label class="floatLeft">Full Name: </label><input type="text" class="floatRight" name="name"/></div>
+                    <div class="bottomMargin"><label class="floatLeft">Street: </label><input type="text" class="floatRight" name="street"/></div>
+                    <div class="bottomMargin"><label class="floatLeft">City: </label><input type="text" class="floatRight" name="city"/></div>
+                    <div class="bottomMargin"><label class="floatLeft">State: </label><input type="text" class="floatRight" name="state"/></div>
+                    <div class="bottomMargin"><label class="floatLeft">Zip: </label><input type="text" class="floatRight" name="zip"/></div>
+                    <div class="bottomMargin"><label class="floatLeft">Number of beds: </label><input type="text" class="floatRight" name="bed"/></div>
+                    <div class="bottomMargin"><label class="floatLeft">Number of baths: </label><input type="text" class="floatRight" name="bath"/></div>
+                    <div class="bottomMargin"><label class="floatLeft">Cost per night: </label><input type="text" class="floatRight" name="cost"></div>
+                    <div class="bottomMargin"><label class="floatLeft">Image url: </label><input type="text" class="floatRight" name="image"></div>
+            
+                    <br/>
+                    <br/>
+                    <input class="floatLeft" onclick="AddedReset()" type="reset" />
+                    <input class="floatRight"  type="submit" onclick="AddedSuccess()" value="Submit Property"/>
+                </form>
+            </div>
+        </div>
+        <div class="spaceDivs">
+            <div>
+                <h2>Remove a space</h2>
+                <p id="findFailure" style="display: none; color: red;">No property found!</p>
+                <form action="/managePropertyRemoved" method="post">
+                    <div class="bottomMargin"><label class="floatLeft">Full Name: </label><input type="text" class="floatRight" name="name"/></div>
+                    <div class="bottomMargin"><label class="floatLeft">Street: </label><input type="text" class="floatRight" name="street"/></div>
+                    <div class="bottomMargin"><label class="floatLeft">City: </label><input type="text" class="floatRight" name="city"/></div>
+                    <div class="bottomMargin"><label class="floatLeft">State: </label><input type="text" class="floatRight" name="state"/></div>
+                    <div class="bottomMargin"><label class="floatLeft">Zip: </label><input type="text" class="floatRight" name="zip"/></div>
+            
+                    <br/>
+                    <br/>
+                    <input class="floatLeft" onclick="FindReset()" type="reset" />
+                    <input class="floatRight"  type="submit" onclick="FindProperty()" value="Find Property"/>
+                </form>
+            </div>
+        </div>
+
     </div>
     <div>
         <div style="margin: 100px auto auto auto; text-align: center; ">
@@ -92,7 +154,31 @@
             }
 
             function AddedSuccess() {
+                const form = document.createElement('form');
+                form.method = 'post';
+                form.action = 'managePropertyAdded';
+                document.body.appendChild(form);
+                
+                form.submit();
                 document.getElementById('addedSuccess').style.display = 'block';
+            }
+
+            function AddedReset() {
+                document.getElementById('addedSuccess').style.display = 'none';
+            }
+            
+            function FindProperty(){
+                const form = document.createElement('form');
+                form.method = 'post';
+                form.action = 'managePropertyRemoved';
+                document.body.appendChild(form);
+                
+                form.submit();
+                document.getElementById('findFailure').style.display = 'block';
+            }
+
+            function FindReset(){
+                document.getElementById('findFailure').style.display = 'none';
             }
 
 </script>
