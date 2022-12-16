@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: No test has been specified. \" && exit 1"
+    "build": "npm install",
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",

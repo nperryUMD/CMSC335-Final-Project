@@ -324,7 +324,7 @@ app.post("/loadFakeData", async (request, response) =>{
 
 
 http.createServer(app).listen(port_number);
-console.log(`Web server started and running at http://localhost:${port_number}`);
+console.log(`Web server started and running on port: ${port_number}`);
 console.log("Stop to shutdown the server: ");
 
 process.stdin.on('data', (data) => {
