@@ -1,5 +1,5 @@
 let http = require("http");
-let port_number = 5001;
+let port_number = process.env.PORT || 5001;
 let path = require("path");
 let express = require("express");
 const {ObjectId} = require('mongodb');
