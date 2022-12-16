@@ -61,10 +61,11 @@
             border: none; 
             background-color: white;
             font-size: 1.5em;
+            font-family: 'Poppins', sans-serif;
         }
 
         .topButtons:hover{
-            background-color: lightgray;
+            color: #FF5A5F;
             cursor: pointer;
         }
 
@@ -89,7 +90,7 @@
         }
 
         .rentButton {
-            background-color: #4CAF50;
+            background-color: #00A699;
             border-radius: 8px;
             margin-top: 8px;
             border: none;
@@ -102,7 +103,7 @@
             cursor: pointer;
             background-color: white; 
             color: black; 
-            border: 2px solid #4CAF50;
+            border: 2px solid #00A699;
         }
 
         .rentedButton {
@@ -115,13 +116,14 @@
             text-decoration: none;
             font-size: 16px;
             cursor: pointer;
-            background-color: lightgreen; 
+            background-color: #08d2c1; 
             color: black; 
-            border: 2px solid #4CAF50;
+            border: 2px solid #00A699;
+            font-family: 'Poppins', sans-serif;
         }
 
         .rentButton:hover {
-            background-color: #4CAF50;
+            background-color: #00A699;
             color: white;
         }
 
@@ -141,11 +143,11 @@
     <div>
         <div class="results">
             <image class="resultImages" src=<%- image %>></image>
-            <p>Address: <%- address %></p>
-            <p>Cost: <%- cost %>/night</p>
-            <p><%- bedBath %></p>
-            <p>Owner: <%- owner %></p>
-            <p>This property is <%- availablility %></p>
+            <p style="font-family: 'Poppins', sans-serif; font-size: 1.5em;">Address: <%- address %></p>
+            <p style="font-family: 'Poppins', sans-serif; font-size: 1.5em;">Cost: <%- cost %>/night</p>
+            <p style="font-family: 'Poppins', sans-serif; font-size: 1.5em;"><%- bedBath %></p>
+            <p style="font-family: 'Poppins', sans-serif; font-size: 1.5em;">Owner: <%- owner %></p>
+            <p style="font-family: 'Poppins', sans-serif; font-size: 1.5em;">This property is <%- availablility %></p>
 
             <%- button %>
             
