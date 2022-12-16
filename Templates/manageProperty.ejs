@@ -81,11 +81,12 @@
         </div>
     </div>
 
-    <div style="margin: 100px auto auto auto; display: flex; justify-content: center;">
+    <div style="margin: 50px auto auto auto; display: flex; justify-content: center;">
         <div class="spaceDivs rightDivider">
             <div>
                 <h2>Rent out a space</h2>
-                <p id="addedSuccess" style="display: none; color: green;">Property Successfully Added!</p>
+                <p id="addedSuccess" style="display: <%- success %>; color: green;">Property Successfully Added!</p>
+                <p id="addedUnsuccess" style="display: <%- unsuccess %>; color: red;">Fill out the entire form!</p>
                 <form action="/managePropertyAdded" method="post">
                     <div class="bottomMargin"><label class="floatLeft">Full Name: </label><input type="text" class="floatRight" name="name"/></div>
                     <div class="bottomMargin"><label class="floatLeft">Street: </label><input type="text" class="floatRight" name="street"/></div>
@@ -107,8 +108,8 @@
         <div class="spaceDivs">
             <div>
                 <h2>Remove a space</h2>
-                <p id="findFailure" style="display: none; color: red;">No property found!</p>
-                <form action="/managePropertyRemoved" method="post">
+                <p id="findFailure" style="display: <%- found %>; color: red;">No property found!</p>
+                <form action="/getRemoveProperty" method="post">
                     <div class="bottomMargin"><label class="floatLeft">Street: </label><input type="text" class="floatRight" name="street"/></div>
                     <div class="bottomMargin"><label class="floatLeft">City: </label><input type="text" class="floatRight" name="city"/></div>
                     <div class="bottomMargin"><label class="floatLeft">State: </label><input type="text" class="floatRight" name="state"/></div>
@@ -117,7 +118,7 @@
                     <br/>
                     <br/>
                     <input class="floatLeft" onclick="FindReset()" type="reset" />
-                    <input class="floatRight"  type="submit" onclick="FindProperty()" value="Find Property"/>
+                    <input class="floatRight"  type="submit" onclick="FindProperty()" value="Submit Property"/>
                 </form>
             </div>
         </div>
@@ -159,21 +160,20 @@
                 document.body.appendChild(form);
                 
                 form.submit();
-                document.getElementById('addedSuccess').style.display = 'block';
             }
 
             function AddedReset() {
                 document.getElementById('addedSuccess').style.display = 'none';
+                document.getElementById('addedUnsuccess').style.display = 'none';
             }
             
             function FindProperty(){
                 const form = document.createElement('form');
                 form.method = 'post';
-                form.action = 'managePropertyRemoved';
+                form.action = 'getRemoveProperty';
                 document.body.appendChild(form);
                 
                 form.submit();
-                document.getElementById('findFailure').style.display = 'block';
             }
 
             function FindReset(){

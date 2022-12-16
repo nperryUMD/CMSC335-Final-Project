@@ -27,8 +27,24 @@ async function insertPlace(client, databaseAndCollection, place) {
     const result = await client.db(databaseAndCollection.db).collection(databaseAndCollection.collection).insertOne(place);
 }
 
+async function removeById(client, databaseAndCollection, id) {
+    let filter = {_id: ObjectId(id)};
+    const result = await client.db(databaseAndCollection.db)
+                   .collection(databaseAndCollection.collection)
+                   .deleteOne(filter);
+}
+
 async function getById(client, databaseAndCollection, id) {
     let filter = {_id : ObjectId(id)};
+    const result = client.db(databaseAndCollection.db)
+    .collection(databaseAndCollection.collection)
+    .findOne(filter);
+
+    return result;
+}
+
+async function getByAddy(client, databaseAndCollection, street, city, state, zip) {
+    let filter = {street : street, city: city, state: state, zip: zip};
     const result = client.db(databaseAndCollection.db)
     .collection(databaseAndCollection.collection)
     .findOne(filter);
@@ -78,7 +94,8 @@ app.get("/search", async (request, response) => {
 });
 
 app.get("/manageProperty", (request, response) =>{
-    response.render("manageProperty.ejs");
+    var blocks = "none";
+    response.render("manageProperty.ejs", {success: "none", unsuccess: "none", found: "none"});
 });
 
 app.get("/rentPlace", async (request, response) =>{
@@ -111,12 +128,6 @@ app.get("/rentPlace", async (request, response) =>{
         available = "<strong>not available</strong>";
     }
 
-
-    // form to rent
-
-    var form = "";
-
-
     response.render("rentPlace.ejs", {address: addy, bedBath: bedBathText, cost: place.cost, owner: place.owner, image: place.image, availablility: available});
 });
 
@@ -132,6 +143,12 @@ app.post("/managePropertyAdded", async (request, response) =>{
     var image = request.body.image;
     var place = {owner: name, street: street, city: city, state: state, zip: zip, cost: cost, bed, bath, image: image, availablility: true};
 
+    if(name.length == 0 || street.length == 0 || city.length == 0 || state.length == 0 || zip.length == 0 
+                        || cost.length == 0 || bed.length == 0 || bath.length == 0 || image.length == 0){
+        response.render("manageProperty.ejs", {success: "none", unsuccess: "block", found: "none"});
+        return;
+    }
+
     try {
         await client.connect();
         await insertPlace(client, databaseAndCollection, place);
@@ -140,20 +157,57 @@ app.post("/managePropertyAdded", async (request, response) =>{
     } finally {
         await client.close();
     }
+    response.render("manageProperty.ejs", {success: "block", unsuccess: "none", found: "none"});
 });
 
-app.post("/managePropertyRemoved", async (request, response) =>{
+app.post("/getRemoveProperty", async (request, response) =>{
     var street = request.body.street;
     var city = request.body.city;
     var state = request.body.state;
     var zip = request.body.zip;
-    
-    var image = request.body.image;
+
     var place;
+    try {
+        await client.connect();
+        place = await getByAddy(client, databaseAndCollection, street, city, state, zip);
+    } catch (e) {
+        console.error(e);
+    } finally {
+        await client.close();
+    }
 
     if(place){
+        var addy = place.street + ", " + place.city + " " + place.state + " " + place.zip;
+        var bedBathText = place.bed + " beds, " + place.bath + " baths";
+        var available = "";
+        if(place.availablility){
+            available = "<strong>available</strong>";
+        }else{
+            available = "<strong>not available</strong>";
+        }
 
+        response.render("removeProperty.ejs", {id: (place._id.toString()), address: addy, bedBath: bedBathText, cost: place.cost, owner: place.owner, image: place.image, availablility: available});
+    }else{
+        var blocks = "block";
+        response.render("manageProperty.ejs", {success: "none", unsuccess: "none", found: "block"});
     }
+
+});
+
+app.post("/removeProperty", async (request, response) =>{
+    var id = request.body.id;
+
+    var place;
+    try {
+        await client.connect();
+        place = await removeById(client, databaseAndCollection, id);
+    } catch (e) {
+        console.error(e);
+    } finally {
+        await client.close();
+    }
+
+    response.redirect("/search");
 
 });
 
