@@ -3,6 +3,7 @@ const port_number = process.env.PORT || 5001;
 const path = require("path");
 const express = require("express");
 const {ObjectId} = require('mongodb');
+const fetch = require("node-fetch");
 require("dotenv").config({ path: path.resolve(__dirname, '.env') })  
 
 const userName = process.env.MONGO_DB_USERNAME;
@@ -129,8 +130,7 @@ app.get("/manageProperty", (request, response) =>{
 });
 
 app.get("/rentPlace", async (request, response) =>{
-    const fetch = require("node-fetch");
-    let url = 'https://weatherapi-com.p.rapidapi.com/current.json?q=';
+    var url = 'https://weatherapi-com.p.rapidapi.com/current.json?q=';
     var id = request.query.id;
     if(id == undefined || id == null || id.length == 0){
         location = "";
@@ -160,12 +160,17 @@ app.get("/rentPlace", async (request, response) =>{
         }
     };
 
-    fetch(url, options)
+    try {
+        fetch(url, options)
 	    .then(response => response.json())
 	    .then(data => {
             console.log(data);
-        })
-	    .catch(err => console.error('error:' + err));
+        });
+    } catch (e) {
+        console.error(e);
+    } finally {
+        await client.close();
+    }
 
     var addy = place.street + ", " + place.city + " " + place.state + " " + place.zip;
     var bedBathText = place.bed + " beds, " + place.bath + " baths";
