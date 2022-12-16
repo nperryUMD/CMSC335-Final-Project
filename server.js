@@ -3,7 +3,6 @@ const port_number = process.env.PORT || 5001;
 const path = require("path");
 const express = require("express");
 const {ObjectId} = require('mongodb');
-// const fetch = require("node-fetch");
 const fetch = (...args) => import('node-fetch')
               .then(({default: fetch}) => fetch(...args));
 
