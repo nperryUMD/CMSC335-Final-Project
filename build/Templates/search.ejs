@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Not AirBnB</title>
+    <style>
+        .navigationBar{
+            border-color: black;
+            border-bottom: solid;
+            border-width: 1px;
+            height: 60px;
+        }
+
+        .results{
+            border-color: black;
+            border-radius: .5em;
+            width: 350px;
+            padding: 5px;
+            border-style: solid;
+            display: inline-block;
+            height: 150px;
+            margin: 10px; 
+        }
+
+        .resultImages{
+            border-radius: 8px;
+            width: 100px;
+            height: 100px;
+            position: relative;
+            float: right;
+            right: 1px;
+            top: 1px;
+        }
+
+        .topText{
+            margin-top: 5px;
+        }
+
+        .rentButton {
+            background-color: #4CAF50;
+            border-radius: 8px;
+            margin-top: 8px;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+            background-color: white; 
+            color: black; 
+            border: 2px solid #4CAF50;
+            position: relative;
+            float: right;
+            right: 1px;
+            bottom: 1px;
+            clear: right;
+        }
+        .rentButton:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .rightSideNav{
+            right: 0px;
+            padding: 15px;
+            font-size: 1em;
+            position: absolute;
+            top: 0px;
+        }
+
+        .leftSideNav{
+            left: 0px;
+            font-size: 1.5em;
+            position: absolute;
+            top: 0px;
+            margin: 15px;
+        }
+
+        .topButtons{
+            border: none; 
+            background-color: white;
+            font-size: 1.5em;
+        }
+
+        .topButtons:hover{
+            background-color: lightgray;
+            cursor: pointer;
+        }
+
+        .margin-bottom{
+            margin-bottom: 20px;
+        }
+
+        .margin-right{
+            margin-right: 20px;
+        }
+
+        .searchBar{
+            margin: 50px auto auto auto; 
+            text-align: center;
+        }
+
+        .spaceDivs{
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 400px);
+            justify-content: center;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="navigationBar">
+        <p class="topButtons leftSideNav" onclick="get('/')">
+            Not AirBnB
+        </p>
+        <div class="rightSideNav">
+            <button class="topButtons" onclick="get('/search')">Browse All</button> |
+            <button class="topButtons" onclick="get('/manageProperty')">Manage Property</button>
+        </div>
+    </div>
+
+    <div>
+        <div class="searchBar">
+            <form action="/search" method="get">
+                <!-- <input type="checkbox" id="showAvailable" name="showAvailable" checked><label for="showAvailable" class="margin-right"> Only show available?</label> -->
+                <input class="margin-bottom" size='60' placeholder="Enter a city" value="<%- searchBar %>" name='location' id='searchBar'/>
+                <input type="submit" onclick="sendSearch()" value="Filter"/>
+            </form>
+        </div>
+        <div class="spaceDivs">
+            <%- searchResults %>
+        </div>
+        
+	</div>
+
+    <script>
+            function sendSearch() {
+                var options = document.getElementById('searchBar');
+                var url = new URL(window.location.href);
+                var params = new URLSearchParams(url.search);
+
+                params.set('location', 'options');
+                window.location.href = url.toString;
+            }
+
+            function get(path, method='get') {
+                const form = document.createElement('form');
+                form.method = method;
+                form.action = path;
+
+                document.body.appendChild(form);
+                form.submit();
+            }
+
+            function rent(id) {
+                const form = document.createElement('form');
+                form.method = 'get';
+                form.action = '/rentPlace';
+
+                const hiddenField = document.createElement('input');
+                hiddenField.type = 'hidden';
+                hiddenField.name = 'id';
+                hiddenField.value = id;
+
+                form.appendChild(hiddenField);
+
+                document.body.appendChild(form);
+                form.submit();
+            }
+
+</script>
+	
+</body>

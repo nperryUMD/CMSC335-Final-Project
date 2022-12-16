@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Not AirBnB</title>
+    <style>
+        .frontPageTitle{
+            color: coral;
+            font-size: 8em;
+        }
+        .frontPageTitle:hover{
+            cursor: default;
+        }
+        .topButtons{
+            border: none; 
+            background-color: none;
+            font-size: 1em;
+            color: white;
+            border-radius: 4px;
+            border: none;
+            text-decoration: none;
+            transition-duration: 0.3s;
+            cursor: pointer;
+            background-color: transparent;
+
+        }
+
+        .topButtons:hover{
+            color: coral;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        .backgroundImage{
+            background-image: url("https://dm0qx8t0i9gc9.cloudfront.net/thumbnails/video/4Xw4byPvl/videoblocks-4k-footage-of-a-yellow-american-suburban-house-rising-to-show-the-rooftops-of-other-houses-in-the-neighborhood_hfuo7ob_u_thumbnail-1080_01.png");
+            width: 99vw;
+            height: 80vh;
+            margin: 0px;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+
+    </style>
+</head>
+<body class="backgroundImage">
+    <div style="
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        padding: 15px;
+        font-size: 1.5em;
+        color: white;">
+        <button class="topButtons" onclick="get('/search')">Browse All</button> |
+        <button class="topButtons" onclick="get('/manageProperty')">Manage Property</button>
+    </div>
+	<div style="margin: auto; text-align: center;">
+		<p class="frontPageTitle">Not AirBnB</p>
+		<div>
+            <form action="/search" method="get">
+                <input size="100" placeholder ="Search for a location! Enter a city." name="location" id="searchBar"></input>
+                <input type="submit" onclick="sendSearch()" value="Go!"/>
+            </form>
+		</div>
+	</div>
+
+    <script>
+            function sendSearch() {
+                var options = document.getElementById('searchBar');
+                var url = new URL(window.location.href);
+                let params = new URLSearchParams(url.search);
+
+                params.set('location', 'options');
+                window.location.href = url.toString;
+            }
+
+            function get(path, method='get') {
+                const form = document.createElement('form');
+                form.method = method;
+                form.action = path;
+
+                document.body.appendChild(form);
+                form.submit();
+            }
+</script>
+	
+</body>
