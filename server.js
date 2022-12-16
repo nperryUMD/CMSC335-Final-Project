@@ -162,11 +162,13 @@ app.get("/rentPlace", async (request, response) =>{
         }
     };
 
+    let currWeather;
     try {
         fetch(url, options)
 	    .then(response => response.json())
 	    .then(data => {
             console.log(data);
+            currWeather = data["current"]["temp_f"];
         });
     } catch (e) {
         console.error(e);
@@ -187,10 +189,11 @@ app.get("/rentPlace", async (request, response) =>{
         button = "<form action='/rentPlace' method='post'><input readonly disabled='disabled' class='rentedButton'  type='submit' value='Rented out!'/></form>";
     }
 
-    response.render("rentPlace.ejs", {address: addy, bedBath: bedBathText, cost: place.cost, owner: place.owner, image: place.image, availablility: available, button: button});
+    response.render("rentPlace.ejs", {address: addy, bedBath: bedBathText, cost: place.cost, weather: currWeather, owner: place.owner, image: place.image, availablility: available, button: button});
 });
 
 app.post("/rentPlace", async (request, response) =>{
+    var url = 'https://weatherapi-com.p.rapidapi.com/current.json?q=';
     var id = request.body.id;
     if(id == undefined || id == null || id.length == 0){
         location = "";
@@ -212,6 +215,30 @@ app.post("/rentPlace", async (request, response) =>{
         response.redirect("/search");
     }
 
+    url += place.city
+    
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': '7067c52d38msha5a660c9dbb588ap121ee0jsn8eda68d6893c',
+            'X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com'
+        }
+    };
+
+    let currWeather;
+    try {
+        fetch(url, options)
+	    .then(response => response.json())
+	    .then(data => {
+            console.log(data);
+            currWeather = data["current"]["temp_f"];
+        });
+    } catch (e) {
+        console.error(e);
+    } finally {
+        await client.close();
+    }
+
     try {
         await client.connect();
         await setAvailabilityById(client, databaseAndCollection, id, false);
@@ -227,7 +254,7 @@ app.post("/rentPlace", async (request, response) =>{
 
     var button = "<form action='/rentPlace' method='post'><input readonly disabled='disabled' class='rentedButton'  type='submit' value='Rented out!'/></form>";
 
-    response.render("rentPlace.ejs", {address: addy, bedBath: bedBathText, cost: place.cost, owner: place.owner, image: place.image, availablility: available, button: button});
+    response.render("rentPlace.ejs", {address: addy, bedBath: bedBathText, cost: place.cost, weather: currWeather, owner: place.owner, image: place.image, availablility: available, button: button});
 });
 
 app.post("/managePropertyAdded", async (request, response) =>{
