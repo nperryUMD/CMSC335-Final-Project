@@ -155,19 +155,20 @@ app.get("/rentPlace", async (request, response) =>{
         response.redirect("/search");
     }
 
-    // using Realtime weather API
-    let breakSpace = place.city.split(" ");
-    console.log(breakSpace);
-    alert("hi");
-    let cityString = "";
-    if (breakSpace.length > 1) {
-        breakSpace.array.forEach(element => {
-            cityString += element + "%20";
-        });
-        url += cityString;
-    } else {
-        url += breakSpace;
-    }
+    // // using Realtime weather API
+    // let breakSpace = place.city.split(" ");
+    // console.log(breakSpace);
+    // let cityString = "";
+    // if (breakSpace.length > 1) {
+    //     breakSpace.array.forEach(element => {
+    //         cityString += element + "%20";
+    //     });
+    //     url += cityString;
+    // } else {
+    //     url += breakSpace;
+    // }
+
+    url += place.city
     
     const options = {
         method: 'GET',
