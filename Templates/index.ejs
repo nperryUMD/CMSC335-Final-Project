@@ -2,18 +2,19 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
 	<title>Not AirBnB</title>
     <style>
         .frontPageTitle{
-            color: coral;
+            color: #FF5A5F;
             font-size: 8em;
+            font-family: "Poppins", sans-serif;
         }
         .frontPageTitle:hover{
             cursor: default;
         }
         .topButtons{
-            border: none; 
-            background-color: none;
+            border: none;
             font-size: 1em;
             color: white;
             border-radius: 4px;
@@ -22,12 +23,11 @@
             transition-duration: 0.3s;
             cursor: pointer;
             background-color: transparent;
-
+            font-family: "Poppins", sans-serif;
         }
 
         .topButtons:hover{
-            color: coral;
-            background-color: white;
+            color: #FF5A5F;
             cursor: pointer;
         }
 
@@ -60,8 +60,9 @@
 		<p class="frontPageTitle">Not AirBnB</p>
 		<div>
             <form action="/search" method="get">
-                <input size="100" placeholder ="Search for a location! Enter a city." name="location" id="searchBar"></input>
-                <input type="submit" onclick="sendSearch()" value="Go!"/>
+                <input size="100" placeholder ="Search for a location! Enter a city." name="location" id="searchBar"
+                    style="font-family: 'Poppins', sans-serif;"/>
+                <input type="submit" onclick="sendSearch()" value="Go!" style="font-family: 'Poppins', sans-serif;"/>
             </form>
 		</div>
 	</div>

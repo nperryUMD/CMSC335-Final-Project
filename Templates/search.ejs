@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
 	<title>Not AirBnB</title>
     <style>
         .navigationBar{
@@ -50,7 +51,7 @@
             cursor: pointer;
             background-color: white; 
             color: black; 
-            border: 2px solid #4CAF50;
+            border: 2px solid #00A699;
             position: relative;
             float: right;
             right: 1px;
@@ -58,7 +59,7 @@
             clear: right;
         }
         .rentButton:hover {
-            background-color: #4CAF50;
+            background-color: #00A699;
             color: white;
         }
 
@@ -82,10 +83,11 @@
             border: none; 
             background-color: white;
             font-size: 1.5em;
+            font-family: "Poppins", sans-serif;
         }
 
         .topButtons:hover{
-            background-color: lightgray;
+            color: #FF5A5F;
             cursor: pointer;
         }
 
@@ -125,8 +127,9 @@
         <div class="searchBar">
             <form action="/search" method="get">
                 <!-- <input type="checkbox" id="showAvailable" name="showAvailable" checked><label for="showAvailable" class="margin-right"> Only show available?</label> -->
-                <input class="margin-bottom" size='60' placeholder="Enter a city" value="<%- searchBar %>" name='location' id='searchBar'/>
-                <input type="submit" onclick="sendSearch()" value="Filter"/>
+                <input class="margin-bottom" size='60' placeholder="Enter a city" value="<%- searchBar %>" name='location' id='searchBar'
+                    style= "font-family:'Poppins', sans-serif;" />
+                <input type="submit" onclick="sendSearch()" value="Filter" style= "font-family:'Poppins', sans-serif;"/>
             </form>
         </div>
         <div class="spaceDivs">

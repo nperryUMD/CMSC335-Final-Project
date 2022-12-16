@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
 	<title>Not AirBnB</title>
     <style>
         .navigationBar{
@@ -49,10 +50,11 @@
             border: none; 
             background-color: white;
             font-size: 1.5em;
+            font-family: "Poppins", sans-serif;
         }
 
         .topButtons:hover{
-            background-color: lightgray;
+            color: #FF5A5F;
             cursor: pointer;
         }
 
@@ -76,15 +78,17 @@
             Not AirBnB
         </p>
         <div class="rightSideNav">
-            <button class="topButtons" onclick="get('/search')">Browse All</button> |
-            <button class="topButtons" onclick="get('/manageProperty')">Manage Property</button>
+            <button class="topButtons" onclick="get('/search')" style="font-family: 'Poppins', sans-serif;"
+                >Browse All</button> |
+            <button class="topButtons" onclick="get('/manageProperty')" style="font-family: 'Poppins', sans-serif;"
+                >Manage Property</button>
         </div>
     </div>
 
     <div style="margin: 50px auto auto auto; display: flex; justify-content: center;">
         <div class="spaceDivs rightDivider">
             <div>
-                <h2>Rent out a space</h2>
+                <h2 style="font-family: 'Poppins', sans-serif;">Rent out a space</h2>
                 <p id="addedSuccess" style="display: <%- success %>; color: green;">Property Successfully Added!</p>
                 <p id="addedUnsuccess" style="display: <%- unsuccess %>; color: red;">Fill out the entire form!</p>
                 <form action="/managePropertyAdded" method="post">
@@ -100,14 +104,15 @@
             
                     <br/>
                     <br/>
-                    <input class="floatLeft" onclick="AddedReset()" type="reset" />
-                    <input class="floatRight"  type="submit" onclick="AddedSuccess()" value="Submit Property"/>
+                    <input class="floatLeft" onclick="AddedReset()" type="reset" style="font-family: 'Poppins', sans-serif;" />
+                    <input class="floatRight"  type="submit" onclick="AddedSuccess()" value="Submit Property" 
+                        style="font-family: 'Poppins', sans-serif;"/>
                 </form>
             </div>
         </div>
         <div class="spaceDivs">
             <div>
-                <h2>Remove a space</h2>
+                <h2 style="font-family: 'Poppins', sans-serif;">Remove a space</h2>
                 <p id="findFailure" style="display: <%- found %>; color: red;">No property found!</p>
                 <form action="/getRemoveProperty" method="post">
                     <div class="bottomMargin"><label class="floatLeft">Street: </label><input type="text" class="floatRight" name="street"/></div>
@@ -117,20 +122,21 @@
             
                     <br/>
                     <br/>
-                    <input class="floatLeft" onclick="FindReset()" type="reset" />
-                    <input class="floatRight"  type="submit" onclick="FindProperty()" value="Submit Property"/>
+                    <input class="floatLeft" onclick="FindReset()" type="reset" style="font-family: 'Poppins', sans-serif;" />
+                    <input class="floatRight"  type="submit" onclick="FindProperty()" value="Submit Property"
+                        style="font-family: 'Poppins', sans-serif;"/>
                 </form>
             </div>
         </div>
 
     </div>
-    <div>
+    <!-- <div>
         <div style="margin: 100px auto auto auto; text-align: center; ">
             <button onclick="loadFakeData()">Press to auto load fake data</button>
             <p id="loadedSuccess" style="display: none;">Data Loaded Successfully</p>
         </div>
         
-	</div>
+	</div> -->
 
     <script>
 
